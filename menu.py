@@ -120,9 +120,9 @@ class CreditsMenu(Menu):
             self.game.display.fill (self.game.BLACK)
             self.game.draw_text('Credits', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
             self.game.draw_text('Authors:', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
-            self.game.draw_text('Nadine Obeid,', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 30)
-            self.game.draw_text('Edward Tandia, and', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 50)
-            self.game.draw_text('Arturo Garcia Luna Beltran', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 70)
+            self.game.draw_text('- Nadine Obeid -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 30)
+            self.game.draw_text('- Edward Tandia -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 50)
+            self.game.draw_text('- Arturo Garcia Luna Beltran -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 70)
             self.blit_screen()
 
 
