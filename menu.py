@@ -30,7 +30,7 @@ class MainMenu(Menu): # inherit menu class
         while self.run_display:
             self.game.check_events()
             self.check_input()
-            self.game.display.fill(self.game.BLACK) # reset the screen
+            self.game.display.fill(self.game.BACKGROUND) # reset the screen
             self.game.draw_text('Main Menu', 50, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
             self.game.draw_text('Start Game', 30, self.startx, self.starty)
             self.game.draw_text('Options', 30, self.optionsx, self.optionsy)
@@ -117,7 +117,7 @@ class CreditsMenu(Menu):
             if self.game.START_KEY or self.game.BACK_KEY:
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
-            self.game.display.fill (self.game.BLACK)
+            self.game.display.fill (self.game.BACKGROUND)
             self.game.draw_text('Credits', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
             self.game.draw_text('Authors:', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
             self.game.draw_text('- Nadine Obeid -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 30)
