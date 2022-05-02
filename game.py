@@ -18,7 +18,8 @@ class Game():
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
         self.font_name = pygame_menu.font.FONT_NEVIS
         self.BACKGROUND, self.WHITE,  = (0, 0, 0), (255, 255, 255)
-        self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER = (0, 255, 0), (255, 255, 0), (128, 128, 128)
+        self.LETTER = (128, 128, 128)
+        self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
         self.board = [[" ", " ", " ", " ", " "],
@@ -63,12 +64,14 @@ class Game():
                 if not letter in secret_word_histogram:
                     secret_word_histogram[letter] = {}
                 secret_word_histogram[letter][col] = True
+            # build color array
+            letter_colors = [self.LETTER_INCORRECT] * 5
             # check for in place letters
             for col in range(0, 5):
                 letter = self.board[row][col]
                 if letter in secret_word_histogram:
                     if col in secret_word_histogram[letter]:
-                        pygame.draw.rect(self.display, self.LETTER_IN_PLACE, [col * 100 + 12, row * 100 + 12, 75, 75], 0, 5)
+                        letter_colors[col] = self.LETTER_IN_PLACE
                         secret_word_histogram[letter].pop(col)
                     if len(secret_word_histogram[letter].keys()) == 0:
                         secret_word_histogram.pop(letter)
@@ -76,10 +79,14 @@ class Game():
             for col in range(0, 5):
                 letter = self.board[row][col]
                 if letter in secret_word_histogram:
-                    pygame.draw.rect(self.display, self.LETTER_FOUND, [col * 100 + 12, row * 100 + 12, 75, 75], 0, 5)
-                    secret_word_histogram[letter].pop(next(iter(secret_word_histogram[letter])))
+                    if letter_colors[col] == self.LETTER_INCORRECT:  # stops yellow color from overriding green
+                        letter_colors[col] = self.LETTER_FOUND
+                        secret_word_histogram[letter].pop(next(iter(secret_word_histogram[letter])))
                     if len(secret_word_histogram[letter].keys()) == 0:
                         secret_word_histogram.pop(letter)
+            # draw colors
+            for col in range(0, 5):
+                pygame.draw.rect(self.display, letter_colors[col], [col * 100 + 12, row * 100 + 12, 75, 75], 0, 5)
 
     def game_loop(self):
         while self.playing:
