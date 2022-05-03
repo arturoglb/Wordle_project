@@ -76,7 +76,9 @@ class OptionsMenu(Menu):
         Menu.__init__(self, game)
         self.state = 'Difficulty'
         self.diffx, self.diffy = self.mid_w, self.mid_h + 30
-        self.langx, self.langy = self.mid_w, self.mid_h + 60
+        self.lengx, self.lengy = self.mid_w, self.mid_h + 60
+        self.langx, self.langy = self.mid_w, self.mid_h + 90
+        self.themex, self.themey = self.mid_w, self.mid_h + 120
         self.cursor_rect.midtop = (self.diffx + self.offset, self.diffy)
 
     def display_menu(self):
@@ -87,7 +89,9 @@ class OptionsMenu(Menu):
             self.game.display.fill((0, 0, 0))
             self.game.draw_text('Options', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
             self.game.draw_text('Difficulty', 30, self.diffx, self.diffy)
+            self.game.draw_text('Word Length', 30, self.lengx, self.lengy)
             self.game.draw_text('Language', 30, self.langx, self.langy)
+            self.game.draw_text('Theme', 30, self.themex, self.themey)
             self.draw_cursor()
             self.blit_screen()
 
