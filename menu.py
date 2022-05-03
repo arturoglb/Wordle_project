@@ -2,14 +2,14 @@ import pygame
 
 class Menu():
     def __init__(self, game): # include a reference to game object because there are functions that we want to reuse
-        self.game = game # to get access
+        self.game = game # to get access to the function already created in game.py
         self.mid_w, self.mid_h = self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2
         self.run_display = True # tell our menu to run
         self.cursor_rect = pygame.Rect(0, 0, 20, 20) # (x,y,w,h)
-        self.offset = - 100 # position on the menu
+        self.offset = - 100 # position of the cursor on the menu
 
     def draw_cursor(self):
-        self.game.draw_text('#', 15, self.cursor_rect.x, self.cursor_rect.y)
+        self.game.draw_text('#', 15, self.cursor_rect.x, self.cursor_rect.y) # create the cursor
 
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
@@ -75,11 +75,11 @@ class OptionsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'Difficulty'
-        self.diffx, self.diffy = self.mid_w, self.mid_h + 30
-        self.lengx, self.lengy = self.mid_w, self.mid_h + 60
-        self.langx, self.langy = self.mid_w, self.mid_h + 90
+        self.difficultyx, self.difficultyy = self.mid_w, self.mid_h + 30
+        self.lengthx, self.lengthy = self.mid_w, self.mid_h + 60
+        self.languagex, self.languagey = self.mid_w, self.mid_h + 90
         self.themex, self.themey = self.mid_w, self.mid_h + 120
-        self.cursor_rect.midtop = (self.diffx + self.offset, self.diffy)
+        self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy) # assign a start position to the cursor
 
     def display_menu(self):
         self.run_display = True
@@ -88,26 +88,57 @@ class OptionsMenu(Menu):
             self.check_input()
             self.game.display.fill((0, 0, 0))
             self.game.draw_text('Options', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
-            self.game.draw_text('Difficulty', 30, self.diffx, self.diffy)
-            self.game.draw_text('Word Length', 30, self.lengx, self.lengy)
-            self.game.draw_text('Language', 30, self.langx, self.langy)
+            self.game.draw_text('Difficulty', 30, self.difficultyx, self.difficultyy)
+            self.game.draw_text('Word Length', 30, self.lengthx, self.lengthy)
+            self.game.draw_text('Language', 30, self.languagex, self.languagey)
             self.game.draw_text('Theme', 30, self.themex, self.themey)
             self.draw_cursor()
             self.blit_screen()
 
+    def move_cursor(self):
+        if self.game.DOWN_KEY:
+            if self.state == 'Difficulty':
+                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.state = 'Word Length'
+            elif self.state == 'Word Length':
+                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
+                self.state = 'Language'
+            elif self.state == 'Language':
+                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.state = 'Theme'
+            elif self.state == 'Theme':
+                self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy)
+                self.state = 'Difficulty'
+        elif self.game.UP_KEY:
+            if self.state == 'Difficulty':
+                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.state = 'Theme'
+            elif self.state == 'Theme':
+                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
+                self.state = 'Language'
+            elif self.state == 'Language':
+                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.state = 'Word Length'
+            elif self.state == 'Word Length':
+                self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy)
+                self.state = 'Difficulty'
+
     def check_input(self):
+        self.move_cursor()
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
-        elif self.game.UP_KEY or self.game.DOWN_KEY:
-            if self.state == 'Difficulty':
-                self.state = 'Language'
-                self.cursor_rect.midtop = (self.langx + self.offset, self.langy)
-            elif self.state == 'Language':
-                self.state = 'Difficulty'
-                self.cursor_rect.midtop = (self.diffx + self.offset, self.diffy)
-        elif self.game.START_KEY:
+        elif self.state == 'Difficulty':
             # TO-DO: Create a Difficulty Menu and a Language Menu
+            pass
+        elif self.state == 'Word Length':
+            # TO-DO: Trigger the game with the selected word length
+            pass
+        elif self.state == 'Language':
+            # TO-DO: Trigger the game with the selected language
+            pass
+        elif self.state == 'Theme':
+            # TO-DO: Choose which theme
             pass
 
 class CreditsMenu(Menu):
