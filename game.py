@@ -13,7 +13,7 @@ class Game():
         pygame.init()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 500, 700
+        self.DISPLAY_W, self.DISPLAY_H = 600, 700
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
         self.font_name = pygame_menu.font.FONT_NEVIS
@@ -22,12 +22,9 @@ class Game():
         self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
-        self.board = [[" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "]]
+        self.word_length = 5  # for dynamic word length
+        self.max_guesses = 6  # max guesses
+        self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
         self.fps = 30  # frame rate 30 frames per second
         self.timer = pygame.time.Clock()
         self.secret_word = words.english_5L[random.randint(0, len(words.english_5L) - 1)]
@@ -42,7 +39,7 @@ class Game():
 
     def draw_board(self, size):
         font = pygame.font.Font(self.font_name, size)
-        for col in range(0, 5):
+        for col in range(0, self.word_length):
             for row in range(0, 6):
                 pygame.draw.rect(self.display, self.WHITE, [col * 100 + 12, row * 100 + 12, 75, 75], 3, 5)  # squares around letter
                 piece_text = font.render(self.board[row][col].upper(), True, self.LETTER)  # upper case when printing on screen
@@ -59,15 +56,15 @@ class Game():
         for row in range(0, self.turn):
             # create secret word histogram: histogram[letter][index] = True
             secret_word_histogram = {}
-            for col in range(0, 5):
+            for col in range(0, self.word_length):
                 letter = self.secret_word[col]
                 if not letter in secret_word_histogram:
                     secret_word_histogram[letter] = {}
                 secret_word_histogram[letter][col] = True
             # build color array
-            letter_colors = [self.LETTER_INCORRECT] * 5
+            letter_colors = [self.LETTER_INCORRECT] * self.word_length
             # check for in place letters
-            for col in range(0, 5):
+            for col in range(0, self.word_length):
                 letter = self.board[row][col]
                 if letter in secret_word_histogram:
                     if col in secret_word_histogram[letter]:
@@ -76,7 +73,7 @@ class Game():
                     if len(secret_word_histogram[letter].keys()) == 0:
                         secret_word_histogram.pop(letter)
             # check for found letters
-            for col in range(0, 5):
+            for col in range(0, self.word_length):
                 letter = self.board[row][col]
                 if letter in secret_word_histogram:
                     if letter_colors[col] == self.LETTER_INCORRECT:  # stops yellow color from overriding green
@@ -85,7 +82,7 @@ class Game():
                     if len(secret_word_histogram[letter].keys()) == 0:
                         secret_word_histogram.pop(letter)
             # draw colors
-            for col in range(0, 5):
+            for col in range(0, self.word_length):
                 pygame.draw.rect(self.display, letter_colors[col], [col * 100 + 12, row * 100 + 12, 75, 75], 0, 5)
 
     def game_loop(self):
@@ -139,21 +136,16 @@ class Game():
                     self.message = ""
                     self.game_over = False
                     self.secret_word = words.english_5L[random.randint(0, len(words.english_5L) - 1)]
-                    self.board = [[" ", " ", " ", " ", " "],
-                                  [" ", " ", " ", " ", " "],
-                                  [" ", " ", " ", " ", " "],
-                                  [" ", " ", " ", " ", " "],
-                                  [" ", " ", " ", " ", " "],
-                                  [" ", " ", " ", " ", " "]]
+                    self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
 
-                if event.key == pygame.K_RETURN and not self.game_over and self.letters == 5:  # restrict to 5 letters to move to next line
+                if event.key == pygame.K_RETURN and not self.game_over and self.letters == self.word_length:  # restrict to 5 letters to move to next line
                     if self.in_wordlist():
                         # check if guess is correct, add game over conditions
                         guess = "".join(self.board[self.turn])
                         if guess == self.secret_word:
                             self.message = "You won! :-)"
                             self.game_over = True
-                        elif self.turn == 5:
+                        elif self.turn == self.max_guesses - 1:
                             self.game_over = True
                             self.message = "You lost! :-("
                         self.turn += 1
@@ -162,9 +154,9 @@ class Game():
                         self.message = "Not in wordlist"
 
             # control turn active based on letters
-            if self.letters == 5:
+            if self.letters == self.word_length:
                 self.turn_active = False
-            if self.letters < 5:
+            if self.letters < self.word_length:
                 self.turn_active = True
 
 
