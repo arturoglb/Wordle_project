@@ -129,7 +129,6 @@ class OptionsMenu(Menu):
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
         elif self.state == 'Difficulty':
-            # TO-DO: Create a Difficulty Menu and a Language Menu
             pass
         elif self.state == 'Word Length':
             # TO-DO: Trigger the game with the selected word length
