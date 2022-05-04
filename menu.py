@@ -1,5 +1,8 @@
 import pygame
 
+import words
+
+
 class Menu():
     def __init__(self, game): # include a reference to game object because there are functions that we want to reuse
         self.game = game # to get access to the function already created in game.py
@@ -127,18 +130,18 @@ class OptionsMenu(Menu):
         self.move_cursor()
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
-            self.run_display = False
         elif self.state == 'Difficulty':
             pass
         elif self.state == 'Word Length':
-            # TO-DO: Trigger the game with the selected word length
             pass
+            self.game.curr_menu = self.game.word_length_picker
         elif self.state == 'Language':
             # TO-DO: Trigger the game with the selected language
             pass
         elif self.state == 'Theme':
             # TO-DO: Choose which theme
             pass
+        self.run_display = False
 
 class CreditsMenu(Menu):
     def __init__(self, game):
@@ -159,6 +162,70 @@ class CreditsMenu(Menu):
             self.game.draw_text('- Arturo Garcia Luna Beltran -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 70)
             self.blit_screen()
 
+# Not working yet - to fix
+class WordLengthMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        if self.game.word_length == 6:
+            self.state = 'Six'
+        elif self.game.word_length == 5:
+            self.state = 'Five'
+        elif self.game.word_length == 4:
+            self.state = 'Four'
+        self.difficultyx, self.difficultyy = self.mid_w, self.mid_h + 30
+        self.lengthx, self.lengthy = self.mid_w, self.mid_h + 60
+        self.languagex, self.languagey = self.mid_w, self.mid_h + 90
+        self.themex, self.themey = self.mid_w, self.mid_h + 120
+        self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy)  # assign a start position to the cursor
+
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.check_events()
+            self.check_input()
+            self.game.display.fill((0, 0, 0))
+            self.game.draw_text('Four', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text('Five', 30, self.difficultyx, self.difficultyy)
+            self.game.draw_text('Six', 30, self.lengthx, self.lengthy)
+            self.draw_cursor()
+            self.blit_screen()
+
+    def move_cursor(self):
+        if self.game.DOWN_KEY:
+            if self.state == 'Four':
+                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.state = 'Five'
+            elif self.state == 'Five':
+                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
+                self.state = 'Six'
+            elif self.state == 'Six':
+                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.state = 'Four'
+        elif self.game.UP_KEY:
+            if self.state == 'Four':
+                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.state = 'Six'
+            elif self.state == 'Five':
+                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
+                self.state = 'Four'
+            elif self.state == 'Six':
+                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.state = 'Five'
+
+    def check_input(self):
+        self.move_cursor()
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.options
+        elif self.state == 'Four':
+            self.game.word_length = 4
+            self.game.words_pool = words.english_4L
+        elif self.state == 'Five':
+            self.game.word_length = 5
+            self.game.words_pool = words.english_5L
+        elif self.state == 'Six':
+            self.game.word_length = 6
+        self.game.words_pool = words.english_6L
+        self.run_display = False
 
 
 

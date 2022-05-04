@@ -22,18 +22,20 @@ class Game():
         self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
+        self.words_pool = words.english_5L
         self.word_length = 5  # for dynamic word length
         self.max_guesses = 6  # max guesses
         self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
         self.fps = 30  # frame rate 30 frames per second
         self.timer = pygame.time.Clock()
-        self.secret_word = words.english_5L[random.randint(0, len(words.english_5L) - 1)]
+        self.secret_word = self.words_pool[random.randint(0, len(self.words_pool) - 1)]
         self.game_over = False
         self.letters = 0
         self.message = ""  # to add a message at the bottom of the screen
         self.turn_active = True
         self.main_menu = MainMenu(self)
         self.options = OptionsMenu(self)
+        self.word_length_picker = WordLengthMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
 
@@ -135,7 +137,7 @@ class Game():
                     self.letters = 0
                     self.message = ""
                     self.game_over = False
-                    self.secret_word = words.english_5L[random.randint(0, len(words.english_5L) - 1)]
+                    self.secret_word = self.words_pool[random.randint(0, len(self.words_pool) - 1)]
                     self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
 
                 if event.key == pygame.K_RETURN and not self.game_over and self.letters == self.word_length:  # restrict to 5 letters to move to next line
@@ -172,4 +174,4 @@ class Game():
 
     def in_wordlist(self):
         the_word = "".join(self.board[self.turn])
-        return the_word in words.english_5L
+        return the_word in self.words_pool
