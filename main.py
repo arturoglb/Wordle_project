@@ -1,3 +1,5 @@
+from game4 import Game4
+from game6 import Game6
 from game import Game
 
 g = Game()
