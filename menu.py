@@ -98,8 +98,10 @@ class OptionsMenu(Menu):
             self.draw_cursor()
             self.blit_screen()
 
-    def move_cursor(self):
-        if self.game.DOWN_KEY:
+    def check_input(self):
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.main_menu
+        elif self.game.DOWN_KEY:
             if self.state == 'Difficulty':
                 self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
                 self.state = 'Word Length'
@@ -125,22 +127,17 @@ class OptionsMenu(Menu):
             elif self.state == 'Word Length':
                 self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy)
                 self.state = 'Difficulty'
-
-    def check_input(self):
-        self.move_cursor()
-        if self.game.BACK_KEY:
-            self.game.curr_menu = self.game.main_menu
-        elif self.state == 'Difficulty':
-            pass
-        elif self.state == 'Word Length':
-            pass
-            self.game.curr_menu = self.game.word_length_picker
-        elif self.state == 'Language':
-            # TO-DO: Trigger the game with the selected language
-            pass
-        elif self.state == 'Theme':
-            # TO-DO: Choose which theme
-            pass
+        elif self.game.START_KEY:
+            if self.state == 'Difficulty':
+                pass
+            elif self.state == 'Word Length':
+                self.game.curr_menu = self.game.word_length_picker
+            elif self.state == 'Language':
+                # TO-DO: Trigger the game with the selected language
+                pass
+            elif self.state == 'Theme':
+                # TO-DO: Choose which theme
+                pass
         self.run_display = False
 
 class CreditsMenu(Menu):
@@ -166,17 +163,17 @@ class CreditsMenu(Menu):
 class WordLengthMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
-        if self.game.word_length == 6:
-            self.state = 'Six'
-        elif self.game.word_length == 5:
-            self.state = 'Five'
-        elif self.game.word_length == 4:
-            self.state = 'Four'
-        self.difficultyx, self.difficultyy = self.mid_w, self.mid_h + 30
-        self.lengthx, self.lengthy = self.mid_w, self.mid_h + 60
-        self.languagex, self.languagey = self.mid_w, self.mid_h + 90
-        self.themex, self.themey = self.mid_w, self.mid_h + 120
-        self.cursor_rect.midtop = (self.difficultyx + self.offset, self.difficultyy)  # assign a start position to the cursor
+        #if self.game.word_length == 6:
+        #    self.state = 'Six'
+        #elif self.game.word_length == 5:
+        #    self.state = 'Five'
+        #elif self.game.word_length == 4:
+        #    self.state = 'Four'
+        self.state = 'Four'
+        self.fourx, self.foury = self.mid_w, self.mid_h + 30
+        self.fivex, self.fivey = self.mid_w, self.mid_h + 60
+        self.sixx, self.sixy = self.mid_w, self.mid_h + 90
+        self.cursor_rect.midtop = (self.fourx + self.offset, self.foury)  # assign a start position to the cursor
 
     def display_menu(self):
         self.run_display = True
@@ -184,48 +181,52 @@ class WordLengthMenu(Menu):
             self.game.check_events()
             self.check_input()
             self.game.display.fill((0, 0, 0))
-            self.game.draw_text('Four', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
-            self.game.draw_text('Five', 30, self.difficultyx, self.difficultyy)
-            self.game.draw_text('Six', 30, self.lengthx, self.lengthy)
+            self.game.draw_text('Word Length', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text('Four', 30, self.fourx, self.foury)
+            self.game.draw_text('Five', 30, self.fivex, self.fivey)
+            self.game.draw_text('Six', 30, self.sixx, self.sixy)
             self.draw_cursor()
             self.blit_screen()
 
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.state == 'Four':
-                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.cursor_rect.midtop = (self.fivex + self.offset, self.fivey)
                 self.state = 'Five'
             elif self.state == 'Five':
-                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
+                self.cursor_rect.midtop = (self.sixx + self.offset, self.sixy)
                 self.state = 'Six'
             elif self.state == 'Six':
-                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.cursor_rect.midtop = (self.fourx + self.offset, self.foury)
                 self.state = 'Four'
         elif self.game.UP_KEY:
             if self.state == 'Four':
-                self.cursor_rect.midtop = (self.themex + self.offset, self.themey)
+                self.cursor_rect.midtop = (self.sixx + self.offset, self.sixy)
                 self.state = 'Six'
-            elif self.state == 'Five':
-                self.cursor_rect.midtop = (self.languagex + self.offset, self.languagey)
-                self.state = 'Four'
             elif self.state == 'Six':
-                self.cursor_rect.midtop = (self.lengthx + self.offset, self.lengthy)
+                self.cursor_rect.midtop = (self.fivex + self.offset, self.fivey)
                 self.state = 'Five'
+            elif self.state == 'Five':
+                self.cursor_rect.midtop = (self.fourx + self.offset, self.foury)
+                self.state = 'Four'
 
     def check_input(self):
         self.move_cursor()
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.options
-        elif self.state == 'Four':
-            self.game.word_length = 4
-            self.game.words_pool = words.english_4L
-        elif self.state == 'Five':
-            self.game.word_length = 5
-            self.game.words_pool = words.english_5L
-        elif self.state == 'Six':
-            self.game.word_length = 6
-        self.game.words_pool = words.english_6L
-        self.run_display = False
+            if self.state == 'Four':
+                pass
+                #self.game.word_length = 4
+                #self.game.words_pool = words.english_4L
+            elif self.state == 'Five':
+                pass
+                #self.game.word_length = 5
+                #self.game.words_pool = words.english_5L
+            elif self.state == 'Six':
+                pass
+                #self.game.word_length = 6
+                #self.game.words_pool = words.english_6L
+            self.run_display = False
 
 
 
