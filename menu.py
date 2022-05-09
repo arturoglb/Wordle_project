@@ -1,5 +1,5 @@
 import pygame
-
+import random
 import words
 
 
@@ -321,24 +321,33 @@ class LanguageMenu(Menu):
             if self.state == 'Spanish':
                 if self.game.word_length == 4:
                     self.game.words_pool = words.spanish_4L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
                     self.game.words_pool = words.spanish_5L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
                     self.game.words_pool = words.spanish_6L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             elif self.state == 'English':
                 if self.game.word_length == 4:
                     self.game.words_pool = words.english_4L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
                     self.game.words_pool = words.english_5L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
                     self.game.words_pool = words.english_6L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             elif self.state == 'French':
                 if self.game.word_length == 4:
                     self.game.words_pool = words.french_4L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
                     self.game.words_pool = words.french_5L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
                     self.game.words_pool = words.french_6L
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             self.run_display = False
 
 

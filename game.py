@@ -1,7 +1,7 @@
 from menu import *
 import random
 import pygame
-import words
+from words import *
 import pygame_menu
 
 
@@ -22,7 +22,7 @@ class Game():
         self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
-        self.words_pool = words.english_5L #will have to create a dictionary of list of languages sizes
+        self.words_pool = words.english_6L
         self.word_length = 6  # for dynamic word length
         self.max_guesses = 6  # max guesses
         self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
