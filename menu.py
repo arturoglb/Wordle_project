@@ -129,12 +129,11 @@ class OptionsMenu(Menu):
                 self.state = 'Difficulty'
         elif self.game.START_KEY:
             if self.state == 'Difficulty':
-                pass
+                self.game.curr_menu = self.game.word_difficulty_picker
             elif self.state == 'Word Length':
                 self.game.curr_menu = self.game.word_length_picker
             elif self.state == 'Language':
-                # TO-DO: Trigger the game with the selected language
-                pass
+                self.game.curr_menu = self.game.word_language_picker
             elif self.state == 'Theme':
                 # TO-DO: Choose which theme
                 pass
@@ -159,16 +158,65 @@ class CreditsMenu(Menu):
             self.game.draw_text('- Arturo Garcia Luna Beltran -', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 70)
             self.blit_screen()
 
-# Not working yet - to fix
+class DifficultyMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.state = 'Easy'
+        self.easyx, self.easyy = self.mid_w, self.mid_h + 30
+        self.mediumx, self.mediumy = self.mid_w, self.mid_h + 60
+        self.hardx, self.hardy = self.mid_w, self.mid_h + 90
+        self.cursor_rect.midtop = (self.easyx + self.offset, self.easyy)  # assign a start position to the cursor
+
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.check_events()
+            self.check_input()
+            self.game.display.fill((0, 0, 0))
+            self.game.draw_text('Difficulty', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text('Easy', 30, self.easyx, self.easyy)
+            self.game.draw_text('Medium', 30, self.mediumx, self.mediumy)
+            self.game.draw_text('Hard', 30, self.hardx, self.hardy)
+            self.draw_cursor()
+            self.blit_screen()
+
+    def move_cursor(self):
+        if self.game.DOWN_KEY:
+            if self.state == 'Easy':
+                self.cursor_rect.midtop = (self.mediumx + self.offset, self.mediumy)
+                self.state = 'Medium'
+            elif self.state == 'Medium':
+                self.cursor_rect.midtop = (self.hardx + self.offset, self.hardy)
+                self.state = 'Hard'
+            elif self.state == 'Hard':
+                self.cursor_rect.midtop = (self.easyx + self.offset, self.easyy)
+                self.state = 'Easy'
+        elif self.game.UP_KEY:
+            if self.state == 'Easy':
+                self.cursor_rect.midtop = (self.hardx + self.offset, self.hardy)
+                self.state = 'Hard'
+            elif self.state == 'Hard':
+                self.cursor_rect.midtop = (self.mediumx + self.offset, self.mediumy)
+                self.state = 'Medium'
+            elif self.state == 'Medium':
+                self.cursor_rect.midtop = (self.easyx + self.offset, self.easyy)
+                self.state = 'Easy'
+
+    def check_input(self):
+        self.move_cursor()
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.options
+            if self.state == 'Easy':
+                self.game.max_guesses = 6
+            elif self.state == 'Medium':
+                self.game.max_guesses = 5
+            elif self.state == 'Hard':
+                self.game.max_guesses = 4
+            self.run_display = False
+
 class WordLengthMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
-        #if self.game.word_length == 6:
-        #    self.state = 'Six'
-        #elif self.game.word_length == 5:
-        #    self.state = 'Five'
-        #elif self.game.word_length == 4:
-        #    self.state = 'Four'
         self.state = 'Four'
         self.fourx, self.foury = self.mid_w, self.mid_h + 30
         self.fivex, self.fivey = self.mid_w, self.mid_h + 60
@@ -215,17 +263,82 @@ class WordLengthMenu(Menu):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.options
             if self.state == 'Four':
-                pass
-                #self.game.word_length = 4
-                #self.game.words_pool = words.english_4L
+                self.game.word_length = 4
             elif self.state == 'Five':
-                pass
-                #self.game.word_length = 5
-                #self.game.words_pool = words.english_5L
+                self.game.word_length = 5
             elif self.state == 'Six':
-                pass
-                #self.game.word_length = 6
-                #self.game.words_pool = words.english_6L
+                self.game.word_length = 6
+            self.run_display = False
+
+class LanguageMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.state = 'Spanish'
+        self.spanishx, self.spanishy = self.mid_w, self.mid_h + 30
+        self.englishx, self.englishy = self.mid_w, self.mid_h + 60
+        self.frenchx, self.frenchy = self.mid_w, self.mid_h + 90
+        self.cursor_rect.midtop = (self.spanishx + self.offset, self.spanishy)  # assign a start position to the cursor
+
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.check_events()
+            self.check_input()
+            self.game.display.fill((0, 0, 0))
+            self.game.draw_text('Language', 40, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text('Spanish', 30, self.spanishx, self.spanishy)
+            self.game.draw_text('English', 30, self.englishx, self.englishy)
+            self.game.draw_text('French', 30, self.frenchx, self.frenchy)
+            self.draw_cursor()
+            self.blit_screen()
+
+    def move_cursor(self):
+        if self.game.DOWN_KEY:
+            if self.state == 'Spanish':
+                self.cursor_rect.midtop = (self.englishx + self.offset, self.englishy)
+                self.state = 'English'
+            elif self.state == 'English':
+                self.cursor_rect.midtop = (self.frenchx + self.offset, self.frenchy)
+                self.state = 'French'
+            elif self.state == 'French':
+                self.cursor_rect.midtop = (self.spanishx + self.offset, self.spanishy)
+                self.state = 'Spanish'
+        elif self.game.UP_KEY:
+            if self.state == 'Spanish':
+                self.cursor_rect.midtop = (self.frenchx + self.offset, self.frenchy)
+                self.state = 'French'
+            elif self.state == 'French':
+                self.cursor_rect.midtop = (self.englishx + self.offset, self.englishy)
+                self.state = 'English'
+            elif self.state == 'English':
+                self.cursor_rect.midtop = (self.spanishx + self.offset, self.spanishy)
+                self.state = 'Spanish'
+
+    def check_input(self):
+        self.move_cursor()
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.options
+            if self.state == 'Spanish':
+                if self.game.word_length == 4:
+                    self.game.words_pool = words.spanish_4L
+                elif self.game.word_length == 5:
+                    self.game.words_pool = words.spanish_5L
+                elif self.game.word_length == 6:
+                    self.game.words_pool = words.spanish_6L
+            elif self.state == 'English':
+                if self.game.word_length == 4:
+                    self.game.words_pool = words.english_4L
+                elif self.game.word_length == 5:
+                    self.game.words_pool = words.english_5L
+                elif self.game.word_length == 6:
+                    self.game.words_pool = words.english_6L
+            elif self.state == 'French':
+                if self.game.word_length == 4:
+                    self.game.words_pool = words.french_4L
+                elif self.game.word_length == 5:
+                    self.game.words_pool = words.french_5L
+                elif self.game.word_length == 6:
+                    self.game.words_pool = words.french_6L
             self.run_display = False
 
 
