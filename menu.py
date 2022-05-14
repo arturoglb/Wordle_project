@@ -263,11 +263,44 @@ class WordLengthMenu(Menu):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.options
             if self.state == 'Four':
-                self.game.word_length = 4
+                if self.game.words_pool != words.english_four:
+                    self.game.words_pool = words.english_four
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 4
+                elif self.game.words_pool != words.spanish_four:
+                    self.game.words_pool = words.spanish_four
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 4
+                elif self.game.words_pool != words.french_four:
+                    self.game.words_pool = words.french_four
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 4
             elif self.state == 'Five':
-                self.game.word_length = 5
+                if self.game.words_pool != words.english_five:
+                    self.game.words_pool = words.english_five
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 5
+                elif self.game.words_pool != words.spanish_five:
+                    self.game.words_pool = words.spanish_five
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 5
+                elif self.game.words_pool != words.french_five:
+                    self.game.words_pool = words.french_five
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 5
             elif self.state == 'Six':
-                self.game.word_length = 6
+                if self.game.words_pool != words.english_six:
+                    self.game.words_pool = words.english_six
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 6
+                elif self.game.words_pool != words.spanish_six:
+                    self.game.words_pool = words.spanish_six
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 6
+                elif self.game.words_pool != words.french_six:
+                    self.game.words_pool = words.french_six
+                    self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
+                    self.game.word_length = 6
             self.run_display = False
 
 class LanguageMenu(Menu):
@@ -320,33 +353,33 @@ class LanguageMenu(Menu):
             self.game.curr_menu = self.game.options
             if self.state == 'Spanish':
                 if self.game.word_length == 4:
-                    self.game.words_pool = words.spanish_4L
+                    self.game.words_pool = words.spanish_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
-                    self.game.words_pool = words.spanish_5L
+                    self.game.words_pool = words.spanish_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
-                    self.game.words_pool = words.spanish_6L
+                    self.game.words_pool = words.spanish_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             elif self.state == 'English':
                 if self.game.word_length == 4:
-                    self.game.words_pool = words.english_4L
+                    self.game.words_pool = words.english_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
-                    self.game.words_pool = words.english_5L
+                    self.game.words_pool = words.english_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
-                    self.game.words_pool = words.english_6L
+                    self.game.words_pool = words.english_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             elif self.state == 'French':
                 if self.game.word_length == 4:
-                    self.game.words_pool = words.french_4L
+                    self.game.words_pool = words.french_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 5:
-                    self.game.words_pool = words.french_5L
+                    self.game.words_pool = words.french_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                 elif self.game.word_length == 6:
-                    self.game.words_pool = words.french_6L
+                    self.game.words_pool = words.french_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             self.run_display = False
 

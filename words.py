@@ -28,15 +28,15 @@ french_5 = wordList('5_letters_french.csv')
 french_6 = wordList('6_letters_french.csv')
 
 # Final wordlists for all the languages
-english_4L = remove_accents(english_4)
-english_5L = remove_accents(english_5)
-english_6L = remove_accents(english_6)
-french_4L = remove_accents(french_4)
-french_5L = remove_accents(french_5)
-french_6L = remove_accents(french_6)
-spanish_4L = remove_accents(spanish_4)
-spanish_5L = remove_accents(spanish_5)
-spanish_6L = remove_accents(spanish_6)
+english_four = remove_accents(english_4)
+english_five = remove_accents(english_5)
+english_six = remove_accents(english_6)
+french_four = remove_accents(french_4)
+french_five = remove_accents(french_5)
+french_six = remove_accents(french_6)
+spanish_four = remove_accents(spanish_4)
+spanish_five = remove_accents(spanish_5)
+spanish_six = remove_accents(spanish_6)
 
 
 

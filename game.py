@@ -22,8 +22,8 @@ class Game():
         self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
-        self.words_pool = words.english_6L
-        self.word_length = 6  # for dynamic word length
+        self.words_pool = words.english_five
+        self.word_length = 5  # for dynamic word length
         self.max_guesses = 6  # max guesses
         self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
         self.fps = 30  # frame rate 30 frames per second
@@ -44,7 +44,7 @@ class Game():
     def draw_board(self, size):
         font = pygame.font.Font(self.font_name, size)
         for col in range(0, self.word_length):
-            for row in range(0, 6):
+            for row in range(0, self.max_guesses):
                 pygame.draw.rect(self.display, self.WHITE, [col * 100 + 12, row * 100 + 12, 75, 75], 3, 5)  # squares around letter
                 piece_text = font.render(self.board[row][col].upper(), True, self.LETTER)  # upper case when printing on screen
                 self.display.blit(piece_text, (col * 100 + 30, row * 100 + 25))  # draw the text into the screen
