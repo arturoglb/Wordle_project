@@ -208,10 +208,13 @@ class DifficultyMenu(Menu):
             self.game.curr_menu = self.game.options
             if self.state == 'Easy':
                 self.game.max_guesses = 6
+                self.game.init_board() # reset board
             elif self.state == 'Medium':
                 self.game.max_guesses = 5
+                self.game.init_board()
             elif self.state == 'Hard':
                 self.game.max_guesses = 4
+                self.game.init_board()
             self.run_display = False
 
 class WordLengthMenu(Menu):
@@ -267,40 +270,49 @@ class WordLengthMenu(Menu):
                     self.game.words_pool = words.english_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 4
+                    self.game.init_board()
                 elif self.game.words_pool != words.spanish_four:
                     self.game.words_pool = words.spanish_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 4
+                    self.game.init_board()
                 elif self.game.words_pool != words.french_four:
                     self.game.words_pool = words.french_four
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 4
+                    self.game.init_board()
             elif self.state == 'Five':
                 if self.game.words_pool != words.english_five:
                     self.game.words_pool = words.english_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 5
+                    self.game.init_board()
                 elif self.game.words_pool != words.spanish_five:
                     self.game.words_pool = words.spanish_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 5
+                    self.game.init_board()
                 elif self.game.words_pool != words.french_five:
                     self.game.words_pool = words.french_five
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 5
+                    self.game.init_board()
             elif self.state == 'Six':
                 if self.game.words_pool != words.english_six:
                     self.game.words_pool = words.english_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 6
+                    self.game.init_board()
                 elif self.game.words_pool != words.spanish_six:
                     self.game.words_pool = words.spanish_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 6
+                    self.game.init_board()
                 elif self.game.words_pool != words.french_six:
                     self.game.words_pool = words.french_six
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
                     self.game.word_length = 6
+                    self.game.init_board()
             self.run_display = False
 
 class LanguageMenu(Menu):

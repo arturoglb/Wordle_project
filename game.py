@@ -25,7 +25,7 @@ class Game():
         self.words_pool = words.english_five
         self.word_length = 5  # for dynamic word length
         self.max_guesses = 6  # max guesses
-        self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
+        self.init_board()
         self.fps = 30  # frame rate 30 frames per second
         self.timer = pygame.time.Clock()
         self.secret_word = self.words_pool[random.randint(0, len(self.words_pool) - 1)]
@@ -140,7 +140,7 @@ class Game():
                     self.message = ""
                     self.game_over = False
                     self.secret_word = self.words_pool[random.randint(0, len(self.words_pool) - 1)]
-                    self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
+                    self.init_board()
 
                 if event.key == pygame.K_RETURN and not self.game_over and self.letters == self.word_length:  # restrict to 5 letters to move to next line
                     if self.in_wordlist():
@@ -177,3 +177,6 @@ class Game():
     def in_wordlist(self):
         the_word = "".join(self.board[self.turn])
         return the_word in self.words_pool
+
+    def init_board(self):
+        self.board = [[" " for i in range(self.word_length)] for i in range(self.max_guesses)]
