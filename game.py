@@ -3,6 +3,8 @@ import random
 import pygame
 from words import *
 import pygame_menu
+from animations import Flame
+from Themes import backgrounds
 
 
 pygame.display.set_caption('Wordle with Add-ons') # Title of the game
@@ -40,6 +42,9 @@ class Game():
         self.word_language_picker = LanguageMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
+        self.update = True
+        self.theme = backgrounds(self.display)
+       # self.SetBG = self.SetBG
 
     def draw_board(self, size):
         font = pygame.font.Font(self.font_name, size)
@@ -90,18 +95,27 @@ class Game():
                 pygame.draw.rect(self.display, letter_colors[col], [col * 100 + 12, row * 100 + 12, 75, 75], 0, 5)
 
     def game_loop(self):
+        flame = Flame()
         while self.playing:
             self.check_events()
             if self.START_KEY:
                 self.playing = False
-            self.timer.tick(self.fps)
-            self.display.fill(self.BACKGROUND)
-            self.check_words()
-            self.draw_board(56)
-            self.draw_message()
-            self.window.blit(self.display, (0, 0))
-            pygame.display.update()
-            self.reset_keys()
+               # backgrounds.SetBG() trying to add backgrounds
+                self.timer.tick(self.fps)
+            if self.update == True: # To remove/ to add  black rectangle  # Tab the self
+                self.display.fill(self.BACKGROUND)
+                self.theme.SetBG()
+                self.check_words()
+                self.draw_board(56)
+                self.draw_message()
+                self.window.blit(self.display, (0, 0))
+                pygame.display.update()
+                self.update = False
+            if self.theme.state_bg == 'color': #to turn on the animation only on black bg
+                flame.launchAnimation(self.window)  # flamme
+
+
+        self.reset_keys()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -109,6 +123,8 @@ class Game():
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False  # stop menu from running
             if event.type == pygame.KEYDOWN:
+                self.theme.check_key_entry(event.key)
+                self.update = True
                 if event.key == pygame.K_RETURN and not self.playing or event.key == pygame.K_ESCAPE and self.playing:
                     self.START_KEY = True  # used to enter/exit game
                 if event.key == pygame.K_BACKSPACE:
