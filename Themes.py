@@ -2,9 +2,9 @@ import pygame
 
 pygame.display.set_caption('Wordle with Add-ons')  # Title of the game
 # backgrounds + to remove if possible
-space = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/test_image.jpeg')
-pokemon = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/pokeball-gf7cc846c5_640.png')
-nature = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/img_nature.jpeg')
+space = pygame.image.load('space.jpeg')
+pokemon = pygame.image.load('pokemon.png')
+nature = pygame.image.load('nature.jpeg')
 pokemon_sc = pygame.transform.smoothscale(pokemon, (500, 700))
 space_get = space.get_rect(topleft=(0, 0))
 pokemon_get = pokemon_sc.get_rect(topleft=(0, 0))
