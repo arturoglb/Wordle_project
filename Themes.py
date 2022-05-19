@@ -2,15 +2,14 @@ import pygame
 
 pygame.display.set_caption('Wordle with Add-ons')  # Title of the game
 # backgrounds + to remove if possible
-space = pygame.image.load('space.jpeg')
-pokemon2 = pygame.image.load('pokemon2.jpg')
-lightning = pygame.image.load('lightning.jpg')
-
-#pokemon_sc = pygame.transform.smoothscale(pokemon2, (600, 700))
+space = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/test_image.jpeg')
+pokemon = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/pokeball-gf7cc846c5_640.png')
+nature = pygame.image.load('/Users/edwardtandia/Desktop/UNIL/Programming/project/img_nature.jpeg')
+pokemon_sc = pygame.transform.smoothscale(pokemon, (500, 700))
 space_get = space.get_rect(topleft=(0, 0))
-pokemon_get = pokemon2.get_rect(topleft=(-150, 0))
-lightning_get = lightning.get_rect(topleft=(-750, -300))
-WIDTH = 600
+pokemon_get = pokemon_sc.get_rect(topleft=(0, 0))
+nature_get = nature.get_rect(topleft=(0, 0))
+WIDTH = 500
 HEIGHT = 700
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 
@@ -25,9 +24,9 @@ class backgrounds:
             self.display.fill((0,0,0))
         else:
             if self.keypressed == pygame.K_1:
-                self.display.blit(pokemon2, (pokemon_get))
+                self.display.blit(pokemon, (pokemon_get))
             if self.keypressed == pygame.K_2:
-                self.display.blit(lightning, (lightning_get))
+                self.display.blit(nature, (nature_get))
             if self.keypressed == pygame.K_3:
                 self.display.blit(space, (space_get))
 
