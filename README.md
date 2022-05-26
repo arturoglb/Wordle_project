@@ -26,7 +26,7 @@ A game project in python.
 * **Themes.py** organize the images loading and prepares them for the backgrounds of the game.
 
 ## Run order
-1) *main.py* The only file consider for running is the main file, the different files are linked through it. 
+1) *main.py* The only file considered for running is the main file, the different files are linked through it. 
 
 ## Data
 The words data is allocated on the same folder as the other code files. While running the main file, the various files will consider these data csv files. There is no need to download from an external source.
