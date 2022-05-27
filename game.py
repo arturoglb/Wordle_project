@@ -1,7 +1,7 @@
 from menu import *
 import random
 import pygame
-from words import *
+import words
 import pygame_menu
 from animations import Flame
 from Themes import backgrounds
@@ -24,8 +24,8 @@ class Game():
         self.LETTER_IN_PLACE, self.LETTER_FOUND, self.LETTER_INCORRECT = (0, 255, 0), (255, 255, 0), (0, 0, 0)
         self.SELECTOR = (167, 73, 233)
         self.turn = 0
-        self.words_pool = words.english_five
-        self.word_length = 5  # for dynamic word length
+        self.words_pool = words.english_six
+        self.word_length = 6  # for dynamic word length
         self.max_guesses = 6  # max guesses
         self.init_board()
         self.fps = 30  # frame rate 30 frames per second
@@ -147,7 +147,7 @@ class Game():
                     self.letters -= 1
                     self.message = ""
 
-                if event.key == pygame.K_SPACE:  # CHEAT!! TO BE REMOVED IN FINAL PROGRAM
+                if event.key == pygame.K_SPACE:  # CHEAT !! -  secret word
                     self.message = "".join(self.secret_word)
 
                 if event.key == pygame.K_RETURN and self.game_over:  # to reset the game press return key

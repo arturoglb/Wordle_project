@@ -18,7 +18,7 @@ class backgrounds:
         self.keypressed = None
         self.state_bg = "color"
 
-    def SetBG(self):  # adding chanching background
+    def SetBG(self):  # adding changing background
         if self.state_bg == "color":
             self.display.fill((0,0,0))
         else:
