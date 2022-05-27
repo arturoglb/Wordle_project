@@ -136,7 +136,7 @@ class OptionsMenu(Menu):
                 self.game.curr_menu = self.game.word_language_picker
             elif self.state == 'Theme':
                 # TO-DO: Choose which theme
-                pass
+                self.game.curr_menu = self.game.word_theme_info
         self.run_display = False
 
 class CreditsMenu(Menu):
@@ -395,8 +395,26 @@ class LanguageMenu(Menu):
                     self.game.secret_word = self.game.words_pool[random.randint(0, len(self.game.words_pool) - 1)]
             self.run_display = False
 
+class Theme_menu(Menu):
+    def __init__(self,game):
+        Menu.__init__(self, game)
+
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.check_events()
+            self.game.display.fill((0, 0, 0))
+            self.game.draw_text(''' Press [1,2,3 or 4] while running game ! ''',
+                                29, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2)
+            self.game.draw_text(''' Background 4 has animations ! ''',
+                                29, 300,400)
+            self.check_input()
+            self.blit_screen()
 
 
-
-
+    def check_input(self):
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.options
+            self.blit_screen()
+        self.run_display = False
 

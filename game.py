@@ -44,6 +44,7 @@ class Game():
         self.curr_menu = self.main_menu
         self.update = True
         self.theme = backgrounds(self.display)
+        self.word_theme_info = Theme_menu(self)
        # self.SetBG = self.SetBG
 
     def draw_board(self, size):
