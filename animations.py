@@ -2,6 +2,7 @@
 # -----------------------------------------
 # packages
 import pygame
+import os
 import random
 
 # -----------------------------------------
@@ -10,6 +11,8 @@ import random
 
 SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 700
+
+os.environ['SDL_VIDEO_WINDOW_POS'] = '%d, %d' % (150, 50)
 
 # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # pygame.display.set_caption('Flame Particles using Pygame')
