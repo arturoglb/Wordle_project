@@ -33,16 +33,17 @@ The words data is allocated on the same folder as the other code files. While ru
 
 The word datasets were retrieved from the following sources:
 * *List of 4 letters words*
-Ortograf Inc., February 14th, 2020 (v.- 2.1.1) : https://www.listasdepalabras.es/palabras4letras.htm (spanish)
+Ortograf Inc., February 14th, 2020 (v.- 2.1.1): 
+https://www.listasdepalabras.es/palabras4letras.htm (spanish)
 https://www.listesdemots.net/mots4lettres.htm (french)
 * *List of 5 letters words*
+Ortograf Inc., February 14th, 2020 (v.- 2.1.1): 
 https://www.listasdepalabras.es/palabras5letras.htm  (spanish)
-	https://www.listesdemots.net/mots5lettres.htm 
-(french)
+https://www.listesdemots.net/mots5lettres.htm  (french)
 * *List of 6 letters words*
+Ortograf Inc., February 14th, 2020 (v.- 2.1.1): 
 https://www.listasdepalabras.es/palabras6letras.htm  (spanish)
-	https://www.listesdemots.net/mots6lettres.htm  
-(french)
+https://www.listesdemots.net/mots6lettres.htm (french)
 * *List of 4, 5, and 6 letters words*
 Infochimps, Word List - 350,000 +Simple english words, 2020: 
 https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt  (english)
